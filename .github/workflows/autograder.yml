@@ -1,0 +1,35 @@
+name: Autograder
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ok-tests:
+    name: Run autograder
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run autograder w/ score
+        run: python3 ok --local --score | tee ok_output.txt
+
+      - name: Write score to summary
+        if: always()
+        run: |
+          {
+            echo "## Autograder Results"
+            echo ""
+            echo '```'
+            sed -n '/Point breakdown/,$p' ok_output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
