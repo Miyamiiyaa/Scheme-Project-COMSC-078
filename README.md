@@ -16,7 +16,7 @@ This project was built as the final group project in COMSC 078: Structure and In
 - Install [python](https://www.python.org/downloads/)
 - Clone the repo `git clone https://github.com/Miyamiiyaa/Scheme-Project-COMSC-078.git` and ping me (Eric) in the discord channel to be added as a collaborator
 - If you're using vscode, you can accept the recommended extensions for a python linter, but it's not necessary.
-- To use the interpreter, use `python3 scheme.py` in your terminal.
+- To use the interpreter, use `python3 scheme.py` (or `py scheme.py` if it doesn't work) in your terminal.
 
 We are only editing the following four files:
 - `scheme_eval_apply.py`
