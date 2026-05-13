@@ -30,7 +30,7 @@ test = {
           'code': r"""
           >>> frame = global_frame.make_child_frame(nil, nil)
           >>> frame.parent is global_frame
-          d4dc88cbd250e1e387bfd72d47f43ffd
+          True
           # locked
           """,
           'hidden': False,
