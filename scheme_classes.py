@@ -54,10 +54,15 @@ class Frame:
         if len_link(formals) != len_link(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
-        child_frame = Frame(self)  # Create new frame with 'self' as parent
-        while formals is not nil:
-            child_frame.define(formals.first, vals.first)
-            formals, vals = formals.rest, vals.rest
+        child_frame = Frame(self)
+        
+        # Bind formal parameters to values
+        curr_formal, curr_val = formals, vals
+        while curr_formal is not nil:
+            child_frame.define(curr_formal.first, curr_val.first)
+            curr_formal, curr_val = curr_formal.rest, curr_val.rest
+            
+        # Return the new frame
         return child_frame
         # END PROBLEM 8
 
