@@ -10,20 +10,20 @@ test = {
           >>> vals = Link(1, Link(2, Link(3, nil)))
           >>> frame = global_frame.make_child_frame(formals, vals)
           >>> global_frame.lookup('a') # Type SchemeError if you think this errors
-          487e5d855a4749c37e82d995b26091f7
+          SchemeError
           # locked
           >>> frame.lookup('a')        # Type SchemeError if you think this errors
-          e9c72ee24bf5f0040e3f510cd1634fbe
+          1
           # locked
           >>> frame.lookup('b')        # Type SchemeError if you think this errors
-          725437f086fad00d39b3b3621cfe9fef
+          2
           # locked
           >>> frame.lookup('c')        # Type SchemeError if you think this errors
-          71373a588b7d2da6b021a6a9cb2a416f
+          3
           # locked
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
@@ -34,7 +34,7 @@ test = {
           # locked
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
