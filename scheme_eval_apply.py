@@ -1,16 +1,17 @@
 import sys
 
 from link import *
-from scheme_utils import *
-from scheme_reader import read_line
 from scheme_builtins import create_global_frame
+from scheme_reader import read_line
+from scheme_utils import *
 from ucb import main, trace
 
 ##############
 # Eval/Apply #
 ##############
 
-def scheme_eval(expr, env, _=None): # Optional third argument is ignored
+
+def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in Frame ENV.
 
     >>> expr = read_line('(+ 2 2)')
@@ -27,30 +28,42 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
 
     # All non-atomic expressions are lists (combinations)
     if not scheme_listp(expr):
-        raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
+        raise SchemeError("malformed list: {0}".format(repl_str(expr)))
     first, rest = expr.first, expr.rest
 
-    from scheme_forms import SPECIAL_FORMS # Import here to avoid a cycle when modules are loaded
+    from scheme_forms import (
+        SPECIAL_FORMS,  # Import here to avoid a cycle when modules are loaded
+    )
+
     if scheme_symbolp(first) and first in SPECIAL_FORMS:
         return SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+        operator = scheme_eval(first, env)  # evaluate the operator
+        operands = map_link(
+            lambda operand: scheme_eval(operand, env), rest
+        )  # evaluate the operands
+
+        return scheme_apply(
+            operator, operands, env
+        )  # apply the operator to the operands
+
         # END PROBLEM 3
+
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
     Frame ENV, the current environment."""
     validate_procedure(procedure)
     if not isinstance(env, Frame):
-       assert False, "Not a Frame: {}".format(env)
+        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
-        python_args = [] # convert Scheme list into python list
+        python_args = []  # convert Scheme list into python list
         while args is not nil:
             python_args.append(args.first)
-            args = args.rest # move to the next element
-        
+            args = args.rest  # move to the next element
+
         if procedure.need_env:
             python_args.append(env)
         # END PROBLEM 2
@@ -59,10 +72,10 @@ def scheme_apply(procedure, args, env):
             return procedure.py_func(*python_args)
             # END PROBLEM 2
         except TypeError as err:
-            raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
+            raise SchemeError("incorrect number of arguments: {0}".format(procedure))
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
-        child_frame= procedure.env.make_child_frame(procedure.formals, args)
+        child_frame = procedure.env.make_child_frame(procedure.formals, args)
         return eval_all(procedure.body, child_frame)
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
@@ -72,6 +85,7 @@ def scheme_apply(procedure, args, env):
         # END PROBLEM 11
     else:
         assert False, "Unexpected procedure: {}".format(procedure)
+
 
 def eval_all(expressions, env):
     """Evaluate each expression in the Scheme list EXPRESSIONS in
@@ -83,12 +97,16 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(expressions.first, env) # replace this with lines of your own code
+    return scheme_eval(
+        expressions.first, env
+    )  # replace this with lines of your own code
     # END PROBLEM 6
+
 
 ###################################
 # Extra Challenge: Tail Recursion #
 ###################################
+
 
 class Unevaluated:
     """An expression and an environment in which it is to be evaluated."""
@@ -97,6 +115,7 @@ class Unevaluated:
         """Expression EXPR to be evaluated in Frame ENV."""
         self.expr = expr
         self.env = env
+
 
 def complete_apply(procedure, args, env):
     """Apply procedure to args in env; ensure the result is not an Unevaluated."""
@@ -107,8 +126,10 @@ def complete_apply(procedure, args, env):
     else:
         return val
 
+
 def optimize_tail_calls(unoptimized_scheme_eval):
     """Return a properly tail recursive version of an eval function."""
+
     def optimized_eval(expr, env, tail=False):
         """Evaluate Scheme expression EXPR in Frame ENV. If TAIL,
         return an Unevaluated containing an expression for further evaluation.
@@ -120,19 +141,8 @@ def optimize_tail_calls(unoptimized_scheme_eval):
         # BEGIN OPTIONAL PROBLEM 2
         "*** YOUR CODE HERE ***"
         # END OPTIONAL PROBLEM 2
+
     return optimized_eval
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ################################################################
