@@ -24,7 +24,9 @@ We are only editing the following four files:
 - `scheme_classes.py`
 - `questions.scm`
 
-The project is autograded using the `ok` autograder file. You can run this locally with `python3 ok --local` or run it on individual problems with `-q`, for example: `python3 ok --local -q 03`. When you commit your changes to the repository it will automatically run this autograder, and you can check the results in the Actions tab.
+The project is autograded using the `ok` autograder file. You can run this locally with `python3 ok --local` or run it on individual problems with `-q`, for example: `python3 ok --local -q 03`. If it is your first time running the test on a problem, you will need to unlock the test by first demonstrating you understand what the output *should* be. Run with the flag '-u' and answer the test cases manually to unlock the auto grader. Make sure to actually run the tests on your code afterwards.
+
+ When you commit your changes to the repository it will also automatically run this autograder, and you can check the results in the Actions tab.
 
 The main branch is unprotected because this is a largely sequential project, but be sure you always pull the latest changes and run the autograder before you push anything.
 
