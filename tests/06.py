@@ -7,12 +7,12 @@ test = {
         {
           'code': r"""
           >>> eval_all(Link(2, nil), env)
-          725437f086fad00d39b3b3621cfe9fef
+          2
           # locked
           # choice: 2
           # choice: SchemeError
           >>> eval_all(Link(4, Link(5, nil)), env)
-          9a3da8c3f3291f1ba3284a28cfeb60f8
+          5
           # locked
           # choice: 4
           # choice: 5
@@ -21,7 +21,7 @@ test = {
           >>> eval_all(nil, env) # return None (meaning undefined)
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
@@ -50,40 +50,40 @@ test = {
         {
           'code': r"""
           scm> (begin (+ 2 3) (+ 5 6))
-          8a45d840829a1008ef79013f7d8df6fd
+          11
           # locked
           scm> (begin (define x 3) x)
-          71373a588b7d2da6b021a6a9cb2a416f
+          3
           # locked
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {
           'code': r"""
           scm> (begin 30 '(+ 2 2))
-          231e95c67da5138d11a0d1b68ee03d92
+          (+ 2 2)
           # locked
           # choice: (+ 2 2)
           # choice: '(+ 2 2)
           # choice: 4
           # choice: 30
           scm> (define x 0)
-          344572bfd411ffe1bccc40e3e63b0726
+          x
           # locked
           scm> (begin (define x (+ x 1)) 42 (define y (+ x 1)))
-          e8964e1ed0bd9300da7e470e362a919c
+          y
           # locked
           scm> x
-          e9c72ee24bf5f0040e3f510cd1634fbe
+          1
           # locked
           scm> y
-          725437f086fad00d39b3b3621cfe9fef
+          2
           # locked
           """,
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'multiline': False
         },
         {

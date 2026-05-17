@@ -97,9 +97,16 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(
-        expressions.first, env
-    )  # replace this with lines of your own code
+    if expressions is nil:
+        return None
+    
+    # Evaluate all sub-expressions except the last one for their side-effects
+    while expressions.rest is not nil:
+        scheme_eval(expressions.first, env)
+        expressions = expressions.rest
+        
+    # Evaluate and return the value of the final sub-expression
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 6
 
 
