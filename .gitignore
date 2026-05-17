@@ -14,3 +14,4 @@ Thumbs.db
 # ok autograder
 .ok_messages
 .ok_storage
+.ok_history
