@@ -48,13 +48,11 @@ test = {
           >>> lambda_proc = do_lambda_form(lambda_line.rest, env)
           >>> lambda_proc.formals # use single quotes ' around strings in your answer
           Link ('a', Link('b', Link('c')))
-          # locked
           # choice: Link('a', Link('b', Link('c')))
           # choice: Link('+', Link('a', Link('b', Link('c'))))
           # choice: Link(Link('a', Link('b', Link('c'))))
           >>> lambda_proc.body # the body is a *Scheme list* of expressions! Make sure your answer is a properly nested Link.
           Link (Link('+', Link('a', Link('b', Link('c')))))
-          # locked
           # choice: Link(Link('+', Link('a', Link('b', Link('c')))))
           # choice: Link('+', Link('a', Link('b', Link('c'))))
           # choice: Link('+', 'a', 'b', 'c')
