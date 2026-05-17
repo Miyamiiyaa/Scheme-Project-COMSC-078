@@ -106,7 +106,7 @@ def eval_all(expressions, env):
         expressions = expressions.rest
         
     # Evaluate and return the value of the final sub-expression
-    return scheme_eval(expressions.first, env)
+    return scheme_eval(expressions.first, env, True)
     # END PROBLEM 6
 
 
