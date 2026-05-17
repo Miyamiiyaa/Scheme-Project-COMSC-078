@@ -202,7 +202,21 @@ def make_let_frame(bindings, env):
         raise SchemeError("bad bindings list in let form")
     names = vals = nil
     # BEGIN OPTIONAL PROBLEM 1
-    "*** YOUR CODE HERE ***"
+    list_names = []
+    list_values = []
+    while bindings is not nil:
+        binding = bindings.first
+        validate_form(binding, 2, 2)
+        list_names.append(binding.first)
+        list_values.append(scheme_eval(binding.rest.first, env))
+        bindings = bindings.rest
+
+    for symbol in reversed(list_names):
+        names = Link(symbol, names)
+    for value in reversed(list_values):
+        vals = Link(value, vals)
+
+    validate_formals(names)
     # END OPTIONAL PROBLEM 1
     return env.make_child_frame(names, vals)
 
