@@ -6,9 +6,9 @@ test = {
       'cases': [
         {
           'answer': r"""
-            Link('quote', Link(A, nil)), where:
-                A is the quoted expression
-            """,
+          Link('quote', Link(A, nil)), where:
+              A is the quoted expression
+          """,
           'choices': [
             r"""
             [A], where:

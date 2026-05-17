@@ -6,10 +6,10 @@ test = {
       'cases': [
         {
           'answer': r"""
-            Link(A, Link(B, nil)), where:
-                A is the symbol being bound,
-                B is an expression whose value should be evaluated and bound to A
-                """,
+          Link(A, Link(B, nil)), where:
+              A is the symbol being bound,
+              B is an expression whose value should be evaluated and bound to A
+          """,
           'choices': [
             r"""
             Link(A, Link(B, nil)), where:

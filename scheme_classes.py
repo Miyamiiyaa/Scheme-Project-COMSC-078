@@ -1,12 +1,14 @@
-
 from link import *
+
 
 class SchemeError(Exception):
     """Exception indicating an error in a Scheme program."""
 
+
 ################
 # Environments #
 ################
+
 
 class Frame:
     """An environment frame binds Scheme symbols to Scheme values."""
@@ -18,26 +20,27 @@ class Frame:
 
     def __repr__(self):
         if self.parent is None:
-            return '<Global Frame>'
-        s = sorted(['{0}: {1}'.format(k, v) for k, v in self.bindings.items()])
-        return '<{{{0}}} -> {1}>'.format(', '.join(s), repr(self.parent))
+            return "<Global Frame>"
+        s = sorted(["{0}: {1}".format(k, v) for k, v in self.bindings.items()])
+        return "<{{{0}}} -> {1}>".format(", ".join(s), repr(self.parent))
 
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 1
-        self.bindings[symbol] = value # make symbol point to value in current frame
+        self.bindings[symbol] = value  # make symbol point to value in current frame
         # END PROBLEM 1
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 1
-        if symbol in self.bindings: # if symbol is in current frame
+        if symbol in self.bindings:  # if symbol is in current frame
             return self.bindings[symbol]
-        elif self.parent is not None: # if there is parent frame, look for symbol there
+        elif self.parent is not None:  # if there is parent frame, look for symbol there
             return self.parent.lookup(symbol)
         # END PROBLEM 1
-        raise SchemeError('unknown identifier: {0}'.format(symbol)) # if symbol is not found, raise error
-
+        raise SchemeError(
+            "unknown identifier: {0}".format(symbol)
+        )  # if symbol is not found, raise error
 
     def make_child_frame(self, formals, vals):
         """Return a new local frame whose parent is SELF, in which the symbols
@@ -52,37 +55,41 @@ class Frame:
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
         if len_link(formals) != len_link(vals):
-            raise SchemeError('Incorrect number of arguments to function call')
+            raise SchemeError("Incorrect number of arguments to function call")
         # BEGIN PROBLEM 8
         child_frame = Frame(self)
-        
+
         # Bind formal parameters to values
         curr_formal, curr_val = formals, vals
         while curr_formal is not nil:
             child_frame.define(curr_formal.first, curr_val.first)
             curr_formal, curr_val = curr_formal.rest, curr_val.rest
-            
+
         # Return the new frame
         return child_frame
         # END PROBLEM 8
+
 
 ##############
 # Procedures #
 ##############
 
+
 class Procedure:
     """The the base class for all Procedure classes."""
+
 
 class BuiltinProcedure(Procedure):
     """A Scheme procedure defined as a Python function."""
 
-    def __init__(self, py_func, need_env=False, name='builtin'):
+    def __init__(self, py_func, need_env=False, name="builtin"):
         self.name = name
         self.py_func = py_func
         self.need_env = need_env
 
     def __str__(self):
-        return '#[{0}]'.format(self.name)
+        return "#[{0}]".format(self.name)
+
 
 class LambdaProcedure(Procedure):
     """A procedure defined by a lambda expression or a define form."""
@@ -93,19 +100,22 @@ class LambdaProcedure(Procedure):
         starts with Frame ENV."""
         assert isinstance(env, Frame), "env must be of type Frame"
 
-        from scheme_utils import validate_type, scheme_listp
-        validate_type(formals, scheme_listp, 0, 'LambdaProcedure')
-        validate_type(body, scheme_listp, 1, 'LambdaProcedure')
+        from scheme_utils import scheme_listp, validate_type
+
+        validate_type(formals, scheme_listp, 0, "LambdaProcedure")
+        validate_type(body, scheme_listp, 1, "LambdaProcedure")
         self.formals = formals
         self.body = body
         self.env = env
 
     def __str__(self):
-        return str(Link('lambda', Link(self.formals, self.body)))
+        return str(Link("lambda", Link(self.formals, self.body)))
 
     def __repr__(self):
-        return 'LambdaProcedure({0}, {1}, {2})'.format(
-            repr(self.formals), repr(self.body), repr(self.env))
+        return "LambdaProcedure({0}, {1}, {2})".format(
+            repr(self.formals), repr(self.body), repr(self.env)
+        )
+
 
 class MuProcedure(Procedure):
     """A procedure defined by a mu expression, which has dynamic scope.
@@ -126,8 +136,7 @@ class MuProcedure(Procedure):
         self.body = body
 
     def __str__(self):
-        return str(Link('mu', Link(self.formals, self.body)))
+        return str(Link("mu", Link(self.formals, self.body)))
 
     def __repr__(self):
-        return 'MuProcedure({0}, {1})'.format(
-            repr(self.formals), repr(self.body))
+        return "MuProcedure({0}, {1})".format(repr(self.formals), repr(self.body))

@@ -52,7 +52,7 @@ def do_define_form(expressions, env):
         formals = signature.rest
         body = expressions.rest
 
-        env.define(symbol, do_lambda_form(Pair(formals, body), env))
+        env.define(symbol, do_lambda_form(Link(formals, body), env))
         return str(symbol)
         # END PROBLEM 10
     else:
@@ -132,7 +132,21 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+
+    if expressions is Link.empty:
+        return True
+
+    while expressions is not Link.empty:
+        value = scheme_eval(expressions.first, env)  # get first value
+
+        if is_scheme_false(value):
+            return value
+
+        # if value is the final of the list, return it
+        if expressions.rest is Link.empty:
+            return value
+
+        expressions = expressions.rest  # iterate
     # END PROBLEM 12
 
 
@@ -151,7 +165,20 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if expressions is Link.empty:
+        return False
+
+    while expressions is not Link.empty:
+        value = scheme_eval(expressions.first, env)
+
+        if is_scheme_true(value):
+            return value
+
+        if expressions.rest is Link.empty:
+            return value
+
+        expressions = expressions.rest
+
     # END PROBLEM 12
 
 
