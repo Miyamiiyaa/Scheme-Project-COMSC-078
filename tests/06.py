@@ -8,16 +8,8 @@ test = {
           'code': r"""
           >>> eval_all(Link(2, nil), env)
           2
-          # locked
-          # choice: 2
-          # choice: SchemeError
           >>> eval_all(Link(4, Link(5, nil)), env)
           5
-          # locked
-          # choice: 4
-          # choice: 5
-          # choice: (4 5)
-          # choice: SchemeError
           >>> eval_all(nil, env) # return None (meaning undefined)
           """,
           'hidden': False,
@@ -51,10 +43,8 @@ test = {
           'code': r"""
           scm> (begin (+ 2 3) (+ 5 6))
           11
-          # locked
           scm> (begin (define x 3) x)
           3
-          # locked
           """,
           'hidden': False,
           'locked': False,
@@ -64,23 +54,14 @@ test = {
           'code': r"""
           scm> (begin 30 '(+ 2 2))
           (+ 2 2)
-          # locked
-          # choice: (+ 2 2)
-          # choice: '(+ 2 2)
-          # choice: 4
-          # choice: 30
           scm> (define x 0)
           x
-          # locked
           scm> (begin (define x (+ x 1)) 42 (define y (+ x 1)))
           y
-          # locked
           scm> x
           1
-          # locked
           scm> y
           2
-          # locked
           """,
           'hidden': False,
           'locked': False,
