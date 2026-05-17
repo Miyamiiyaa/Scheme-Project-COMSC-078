@@ -52,7 +52,7 @@ test = {
           # choice: Link('+', Link('a', Link('b', Link('c'))))
           # choice: Link(Link('a', Link('b', Link('c'))))
           >>> lambda_proc.body # the body is a *Scheme list* of expressions! Make sure your answer is a properly nested Link.
-          Link (Link('+', Link('a', Link('b', Link('c')))))
+          Link(Link('+', Link('a', Link('b', Link('c')))))
           # choice: Link(Link('+', Link('a', Link('b', Link('c')))))
           # choice: Link('+', Link('a', Link('b', Link('c'))))
           # choice: Link('+', 'a', 'b', 'c')
