@@ -47,7 +47,7 @@ test = {
           >>> lambda_line = read_line("(lambda (a b c) (+ a b c))")
           >>> lambda_proc = do_lambda_form(lambda_line.rest, env)
           >>> lambda_proc.formals # use single quotes ' around strings in your answer
-          Link ('a', Link('b', Link('c')))
+          Link('a', Link('b', Link('c')))
           # choice: Link('a', Link('b', Link('c')))
           # choice: Link('+', Link('a', Link('b', Link('c'))))
           # choice: Link(Link('a', Link('b', Link('c'))))
