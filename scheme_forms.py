@@ -142,16 +142,19 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
 
+    # if empty, its true
     if expressions is Link.empty:
         return True
 
+    # loop while not empty
     while expressions is not Link.empty:
         value = scheme_eval(expressions.first, env)  # get first value
 
+        # if the first value is false, then return it
         if is_scheme_false(value):
             return value
 
-        # if value is the final of the list, return it
+        # if last expression, return it
         if expressions.rest is Link.empty:
             return value
 
@@ -174,19 +177,24 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
+
+    # if empty, its true
     if expressions is Link.empty:
         return False
 
+    # loop while not empty
     while expressions is not Link.empty:
-        value = scheme_eval(expressions.first, env)
+        value = scheme_eval(expressions.first, env) # get first value
 
+        # if the first value is true, then return it
         if is_scheme_true(value):
             return value
 
+        # if last expression, return it
         if expressions.rest is Link.empty:
             return value
 
-        expressions = expressions.rest
+        expressions = expressions.rest #iterate
 
     # END PROBLEM 12
 

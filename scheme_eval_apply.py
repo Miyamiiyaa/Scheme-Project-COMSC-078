@@ -39,14 +39,14 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        operator = scheme_eval(first, env)  # evaluate the operator
+        operator = scheme_eval(first, env)  # evaluate the operator into a procedure
         operands = map_link(
             lambda operand: scheme_eval(operand, env), rest
-        )  # evaluate the operands
+        )  # evaluate the operands one at a time and collect results in new Link
 
         return scheme_apply(
             operator, operands, env
-        )  # apply the operator to the operands
+        ) # apply procedure to the operands
 
         # END PROBLEM 3
 
@@ -65,11 +65,11 @@ def scheme_apply(procedure, args, env):
             args = args.rest  # move to the next element
 
         if procedure.need_env:
-            python_args.append(env)
+            python_args.append(env) # pass current environment if procedure needs it
         # END PROBLEM 2
         try:
             # BEGIN PROBLEM 2
-            return procedure.py_func(*python_args)
+            return procedure.py_func(*python_args) # call python function with unpacked arguments
             # END PROBLEM 2
         except TypeError as err:
             raise SchemeError("incorrect number of arguments: {0}".format(procedure))
