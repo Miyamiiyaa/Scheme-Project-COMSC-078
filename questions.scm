@@ -17,6 +17,25 @@
   ; END PROBLEM 14
   )
 
+;; merge procedure
+(define (merge ordered? lst1 lst2)
+  (cond
+    ; if one list empty, merged result is other list
+    ((null? lst1) lst2)
+    ((null? lst2) lst1)
+
+    ; if first item of lst1 comes before first item of lst2, keep it and merge the rest of lst1 and lst2
+    ((ordered? (car lst1) (car lst2))
+     (cons (car lst1)
+           (merge ordered? (cdr lst1) lst2)))
+
+    ; else, keep first item of lst2 and merge all of lst1 with lst2
+    (else
+     (cons (car lst2)
+           (merge ordered? lst1 (cdr lst2)))))
+  )
+
+
 
 ;; Problem 15
 
