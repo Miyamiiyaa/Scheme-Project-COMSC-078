@@ -41,8 +41,12 @@ def do_define_form(expressions, env):
             expressions, 2, 2
         )  # Checks that expressions is a list of length exactly 2
         # BEGIN PROBLEM 4
+        # Evaluate the expression that represents the value.
+        # expressions.rest.first extracts the second element of the 'define' form (the value expression).
         value = scheme_eval(expressions.rest.first, env)
+        # Bind the symbol (signature) to the evaluated value in the current environment frame.
         env.define(signature, value)
+        # 3. Return the symbol that was just defined
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Link) and scheme_symbolp(signature.first):
@@ -69,6 +73,8 @@ def do_quote_form(expressions, env):
     """
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 5
+    # Because 'quote' prevents evaluation, we do not call scheme_eval. 
+    # We just extract and return the unevaluated argument data structure itself.
     return expressions.first
     # END PROBLEM 5
 
@@ -97,6 +103,9 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 7
+    # - formals: The list of formal parameter symbols
+    # - expressions.rest: A Scheme list containing all expressions in the function's body.
+    # - env: The current environment frame, creating a closure that remembers where it was defined.
     return LambdaProcedure(formals, expressions.rest, env)
     # END PROBLEM 7
 

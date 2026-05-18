@@ -8,10 +8,14 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 14
+  ;; Define an inner helper function to keep track of the current index state
   (define (enumerate-helper lst index)
+    ;; Base Case
     (if (null? lst)
         '()
+        ;; Recursive Step
         (cons (list index (car lst)) 
+              ;; Recursively process the rest of the elements
               (enumerate-helper (cdr lst) (+ index 1)))))
   (enumerate-helper s 0)
   ; END PROBLEM 14
